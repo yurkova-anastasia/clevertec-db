@@ -110,7 +110,7 @@ FROM aircrafts_data ad
     LEFT JOIN seats s ON
         ad.aircraft_code = s.aircraft_code
 WHERE ad.model:: json ->> 'ru' = 'Аэробус A321-200'
-  AND s.fare_cONditiONs != 'EcONomy'
+  AND s.fare_cONditiONs != 'Economy'
 ORDER BY s.seat_no;
 
 /*
@@ -127,12 +127,12 @@ HAVING count(ad.airport_code) > 1;
 Найти пассажиров, у которых суммарная стоимость бронирований превышает среднюю сумму всех бронирований
 */
 
-SELECT t.pASsenger_name,
+SELECT t.passenger_name,
        sum(tf.amount)
 FROM tickets t
     LEFT JOIN ticket_flights tf ON
         t.ticket_no = tf.ticket_no
-GROUP BY t.pASsenger_name
+GROUP BY t.passenger_name
 HAVING sum(tf.amount) > (SELECT avg(tf.amount)
                          FROM ticket_flights tf)
 ORDER BY sum
